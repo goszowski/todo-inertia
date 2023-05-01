@@ -3,9 +3,7 @@ import { Link, usePage } from '@inertiajs/react'
 import User from '@/Components/User';
 
 const Layout = ({ children }) => {
-    const { user } = usePage().props;
-    const { success } = usePage().props;
-    const { error } = usePage().props;
+    const { user, success, error } = usePage().props;
 
     return (
         <>
