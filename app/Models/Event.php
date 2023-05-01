@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Task extends Model
+class Event extends Model
 {
     use HasFactory;
 
@@ -14,7 +15,6 @@ class Task extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'description',
     ];
 
     public function toArray()
@@ -22,7 +22,6 @@ class Task extends Model
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'description' => $this->description,
             'user' => $this->user,
             'created_at' => $this->created_at,
         ];

@@ -8,21 +8,19 @@ import Textarea from '@/Components/Textarea';
 const Create = () => {
     const { data, setData, post, processing, errors } = useForm({
         title: '',
-        description: '',
     })
 
     function submit(e) {
         e.preventDefault();
-        post(route('tasks.store'));
+        post(route('events.store'));
     }
 
     return (
         <Layout>
-            <Layout.Header>Create new task</Layout.Header>
+            <Layout.Header>Create new event</Layout.Header>
             <div className="card-body">
                 <form onSubmit={submit}>
-                    <Input label="Task title" value={data.title} error={errors.title} onChange={e => setData('title', e.target.value)} />
-                    <Textarea label="Task description" value={data.description} error={errors.description} onChange={e => setData('description', e.target.value)} />
+                    <Input label="Event title" value={data.title} error={errors.title} onChange={e => setData('title', e.target.value)} />
                     <Submit processing={processing}>Create task</Submit>
                 </form>
             </div>

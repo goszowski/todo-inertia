@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Tasks\StoreRequest;
+use App\Http\Requests\Tasks\UpdateRequest;
 
 class TasksController extends Controller
 {
@@ -31,10 +34,11 @@ class TasksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         Task::create([
-            ...$request->all(),
+            'user_id' => Auth::id(),
+            ...$request->validated(),
         ]);
 
         return redirect()->route('tasks.index');
@@ -45,7 +49,9 @@ class TasksController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return Inertia::render('Tasks/Show', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -53,15 +59,19 @@ class TasksController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return Inertia::render('Tasks/Edit', [
+            'task' => $task,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateRequest $request, Task $task)
     {
-        //
+        $task->update($request->validated());
+
+        return redirect()->route('tasks.show', ['task' => $task]);
     }
 
     /**
@@ -69,6 +79,8 @@ class TasksController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()->route('tasks.index');
     }
 }
