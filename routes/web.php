@@ -35,8 +35,8 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 
 Route::group(['prefix' => 'tasks', 'as' => 'tasks.'], function () {
     Route::get('/', [TasksController::class, 'index'])->name('index');
-    Route::get('/create', [TasksController::class, 'create'])->name('create');
-    Route::post('/', [TasksController::class, 'store'])->name('store');
+    Route::get('/create', [TasksController::class, 'create'])->name('create')->middleware(['auth']);
+    Route::post('/', [TasksController::class, 'store'])->name('store')->middleware(['auth']);
 
     Route::group(['prefix' => '{task}', 'middleware' => ['auth']], function () {
         Route::get('/', [TasksController::class, 'show'])->name('show');
