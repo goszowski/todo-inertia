@@ -1,9 +1,9 @@
 import React from 'react'
-import Layout from "../Layout";
+import Layout from "../../Layout";
 import Submit from '@/Components/Submit';
 import { Link, useForm } from '@inertiajs/react';
 
-const Show = ({ event }) => {
+const Default = ({ event }) => {
     const { processing, delete: destroy } = useForm();
 
     const submit = (e) => {
@@ -15,6 +15,9 @@ const Show = ({ event }) => {
         <Layout>
             <Layout.Header>Event: {event.title}</Layout.Header>
             <div className="card-body">
+                <div className="mb-3">
+                    Status: {event.status.label}
+                </div>
                 <div className="row">
                     <div className="col d-grid">
                         <Link href={route('events.edit', { event: event })} className="btn btn-primary">Edit</Link>
@@ -30,4 +33,4 @@ const Show = ({ event }) => {
     )
 }
 
-export default Show
+export default Default

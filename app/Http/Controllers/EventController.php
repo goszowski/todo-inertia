@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Events\StoreRequest;
 use App\Http\Requests\Events\UpdateRequest;
 use App\Models\Event;
+use App\Models\Event\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -38,10 +39,13 @@ class EventController extends Controller
     {
         $event = Event::create([
             'user_id' => Auth::id(),
+            'status' => Status::QUEUED,
             ...$request->validated(),
         ]);
 
-        return redirect()->route('events.index');
+        return redirect()
+            ->route('events.show', ['event' => $event])
+            ->withSuccess('Event created!');
     }
 
     /**
@@ -49,7 +53,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return Inertia::render('Events/Show', [
+        return Inertia::render('Events/Show/' . $event->status->view(), [
             'event' => $event,
         ]);
     }
@@ -71,7 +75,9 @@ class EventController extends Controller
     {
         $event->update($request->validated());
 
-        return redirect()->route('events.show', ['event' => $event]);
+        return redirect()
+            ->route('events.show', ['event' => $event])
+            ->withSuccess('Event updated!');
     }
 
     /**
@@ -81,6 +87,8 @@ class EventController extends Controller
     {
         $event->delete();
 
-        return redirect()->route('events.index');
+        return redirect()
+            ->route('events.index')
+            ->withSuccess('Event deleted!');
     }
 }

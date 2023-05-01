@@ -28,13 +28,17 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index')
+            ->withSuccess('Auth success!');
     }
 
     public function signout()
     {
         Auth::logout();
 
-        return redirect()->route('auth.login.show');
+        return redirect()
+            ->route('auth.login.show')
+            ->withSuccess('Logout success!');
     }
 }

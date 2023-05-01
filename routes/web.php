@@ -40,9 +40,12 @@ Route::group(['prefix' => 'tasks', 'as' => 'tasks.'], function () {
 
     Route::group(['prefix' => '{task}', 'middleware' => ['auth']], function () {
         Route::get('/', [TasksController::class, 'show'])->name('show');
-        Route::get('/edit', [TasksController::class, 'edit'])->name('edit');
-        Route::patch('/', [TasksController::class, 'update'])->name('update');
-        Route::delete('/', [TasksController::class, 'destroy'])->name('destroy');
+
+        Route::group(['middleware' => ['is-task-author']], function () {
+            Route::get('/edit', [TasksController::class, 'edit'])->name('edit');
+            Route::patch('/', [TasksController::class, 'update'])->name('update');
+            Route::delete('/', [TasksController::class, 'destroy'])->name('destroy');
+        });
     });
 });
 
@@ -53,8 +56,15 @@ Route::group(['prefix' => 'events', 'as' => 'events.'], function () {
 
     Route::group(['prefix' => '{event}', 'middleware' => ['auth']], function () {
         Route::get('/', [EventController::class, 'show'])->name('show');
-        Route::get('/edit', [EventController::class, 'edit'])->name('edit');
-        Route::patch('/', [EventController::class, 'update'])->name('update');
-        Route::delete('/', [EventController::class, 'destroy'])->name('destroy');
+
+        Route::group(['middleware' => ['is-event-author']], function () {
+            Route::get('/edit', [EventController::class, 'edit'])->name('edit');
+            Route::patch('/', [EventController::class, 'update'])->name('update');
+            Route::delete('/', [EventController::class, 'destroy'])->name('destroy');
+        });
     });
+});
+
+Route::fallback(function () {
+    return redirect()->route('tasks.index');
 });

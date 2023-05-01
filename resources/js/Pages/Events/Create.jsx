@@ -21,7 +21,7 @@ const Create = () => {
             <div className="card-body">
                 <form onSubmit={submit}>
                     <Input label="Event title" value={data.title} error={errors.title} onChange={e => setData('title', e.target.value)} />
-                    <Submit processing={processing}>Create task</Submit>
+                    <Submit processing={processing}>Create event</Submit>
                 </form>
             </div>
         </Layout>

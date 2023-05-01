@@ -25,6 +25,8 @@ class RegistrationController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index')
+            ->withSuccess('Registration complete. You are now logged in.');
     }
 }

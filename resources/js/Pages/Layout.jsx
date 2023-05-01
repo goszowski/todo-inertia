@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, usePage } from '@inertiajs/react'
 import User from '@/Components/User';
 
 const Layout = ({ children }) => {
     const { user } = usePage().props;
+    const { success } = usePage().props;
+    const { error } = usePage().props;
 
     return (
         <>
@@ -38,8 +40,19 @@ const Layout = ({ children }) => {
                 </div>
             </nav>
             <div className="container pt-5">
-                <div className="card">
-                    {children}
+                <div className="row justify-content-center">
+                    <div className="col-12 col-lg-6">
+                        {error && (
+                            <div className="alert alert-danger">{error}</div>
+                        )}
+
+                        {success && (
+                            <div className="alert alert-success">{success}</div>
+                        )}
+                        <div className="card">
+                            {children}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

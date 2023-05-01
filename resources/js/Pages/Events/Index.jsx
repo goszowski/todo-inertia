@@ -20,7 +20,14 @@ const Index = ({ events }) => {
                                 events.data.map((event, key) => (
                                     <Link className="list-group-item list-group-item-action" key={key} href={route('events.show', { event: event })}>
                                         {event.title}
-                                        <div className="small text-muted">Author: {event.user.name} | Created At: {dayjs(event.created_at).format('DD.MM.YYYY, HH:mm')}</div>
+                                        <div className="small text-muted d-flex align-items-center gap-3">
+                                            <div className="d-flex align-items-center gap-1">
+                                                <div className={`p-1 bg-${event.status.meta.color} rounded-circle`}></div>
+                                                {event.status.label}
+                                            </div>
+                                            <div>Author: {event.user.name}</div>
+                                            <div>Created At: {dayjs(event.created_at).format('DD.MM.YYYY, HH:mm')}</div>
+                                        </div>
                                     </Link>
                                 ))
                             }

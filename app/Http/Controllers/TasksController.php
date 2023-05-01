@@ -41,7 +41,9 @@ class TasksController extends Controller
             ...$request->validated(),
         ]);
 
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index')
+            ->withSuccess('Task created!');
     }
 
     /**
@@ -71,7 +73,9 @@ class TasksController extends Controller
     {
         $task->update($request->validated());
 
-        return redirect()->route('tasks.show', ['task' => $task]);
+        return redirect()
+            ->route('tasks.show', ['task' => $task])
+            ->withSuccess('Task updated!');
     }
 
     /**
@@ -81,6 +85,8 @@ class TasksController extends Controller
     {
         $task->delete();
 
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index')
+            ->withSuccess('Task deleted!');
     }
 }
